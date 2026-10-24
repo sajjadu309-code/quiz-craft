@@ -1,0 +1,13 @@
+{
+  "name": "quizcraft-csc336-assignment-2",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Responsive Web Technologies quiz for CSC336 Assignment 2",
+  "scripts": {
+    "dev": "node server.cjs",
+    "start": "node server.cjs",
+    "test": "node --test tests/quiz-core.test.cjs",
+    "check": "node --check dist/app.js && node --check dist/questions.js && node --check dist/quiz-core.js && node --check dist/pdf-export.js && node --check server.cjs && node --test tests/quiz-core.test.cjs"
+  },
+  "engines": {"node": ">=18"}
+}

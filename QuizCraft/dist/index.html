@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Practice HTML, CSS, JavaScript and Bootstrap with a timed quiz, instant explanations and downloadable PDF results.">
+  <meta name="theme-color" content="#7155e8">
+  <title>QuizCraft | Web Technologies Practice</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="questions.js" defer></script>
+  <script src="quiz-core.js" defer></script>
+  <script src="vendor/jspdf.umd.min.js" defer></script>
+  <script src="vendor/pdf-fonts.js" defer></script>
+  <script src="pdf-export.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.8 7.2L22 12l-7.2 2.8L12 22l-2.8-7.2L2 12l7.2-2.8Z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.8 13.2A9 9 0 0 1 10.8 3 9 9 0 1 0 20.8 13.2Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1Zm0 0v15"/></symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M20 7H8a5 5 0 0 0-5 5m1 5h12a5 5 0 0 0 5-5M16 3l4 4-4 4M8 13l-4 4 4 4"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m7 7-5 5 5 5m10-10 5 5-5 5M14 4l-4 16"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+</svg>
+
+<div class="app-shell">
+  <aside class="sidebar" aria-label="Application sidebar">
+    <a class="brand" href="./" aria-label="QuizCraft home"><span class="brand-icon"><svg><use href="#i-spark"/></svg></span>QuizCraft<span class="brand-dot">.</span></a>
+    <div class="workspace-label">YOUR LEARNING SPACE</div>
+    <nav aria-label="Main navigation">
+      <button class="nav-item active" id="practice-nav"><svg class="icon"><use href="#i-grid"/></svg>Practice room<span class="nav-dot"></span></button>
+      <button class="nav-item" id="help-button"><svg class="icon"><use href="#i-book"/></svg>How it works</button>
+    </nav>
+    <div class="sidebar-course"><span class="tiny-label">CURRENT COLLECTION</span><div class="course-icon"><svg class="icon"><use href="#i-code"/></svg></div><strong>Web fundamentals</strong><p>The building blocks of a better web.</p><div class="course-tags"><span>HTML</span><span>CSS</span><span>JS</span><span>Bootstrap</span></div></div>
+    <div class="sidebar-bottom"><div class="online-dot"></div> A little progress, every day.<span>CSC336 · Web Technologies</span></div>
+  </aside>
+
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="desktop-breadcrumb">Practice room <span>/</span> <strong>Web technologies</strong></div>
+      <a class="brand mobile-brand" href="./"><span class="brand-icon"><svg><use href="#i-spark"/></svg></span>QuizCraft.</a>
+      <div class="topbar-actions"><span class="assignment-pill">Assignment 02</span><button id="theme-toggle" class="icon-button" aria-label="Switch to dark mode" title="Switch theme"><svg class="icon"><use href="#i-moon"/></svg></button></div>
+    </header>
+
+    <main id="main" class="main-content" tabindex="-1">
+      <section id="welcome-screen" aria-labelledby="welcome-title">
+        <div class="hero row align-items-center g-4">
+          <div class="col-lg-7 hero-copy"><div class="eyebrow"><span></span> A SMALL CHALLENGE. A SMARTER YOU.</div><h1 id="welcome-title">Build skills.<br>One question<br><span>at a time.</span></h1><p>Put your web knowledge to work. A quick quiz,<br class="desktop-break"> instant feedback, and something new to learn.</p><div class="hero-tags"><span><svg class="icon"><use href="#i-check"/></svg> Randomized questions</span><span><svg class="icon"><use href="#i-check"/></svg> Instant explanations</span></div></div>
+          <div class="col-lg-5 hero-art" aria-hidden="true"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-star star-one">✧</div><div class="art-star star-two">✧</div><div class="art-card"><div class="art-card-top"><span class="mini-spark">✦</span><span>YOUR NEXT BREAKTHROUGH</span><span>•••</span></div><div class="art-code">&lt;learn&gt;<br><span>try. learn. repeat.</span><br>&lt;/learn&gt;</div><div class="art-progress"><span></span><span></span><span></span><span></span><span></span></div><div class="art-card-footer"><div class="art-check"><svg class="icon"><use href="#i-check"/></svg></div><div><strong>Progress looks good on you.</strong><small>Keep your curiosity going.</small></div></div></div><div class="floating-label"><span>↗</span> A little better, every day</div></div>
+        </div>
+
+        <section class="setup-card" aria-labelledby="setup-title">
+          <div class="setup-heading"><div><h2 id="setup-title">Your next challenge</h2><p>Make it yours. Then see what you know.</p></div><span class="level-pill">BEGINNER FRIENDLY</span></div>
+          <form id="setup-form">
+            <div class="row g-3 setup-fields">
+              <div class="col-md-6"><label class="form-label" for="learner-name">Your name <span>(optional)</span></label><input class="form-control" id="learner-name" name="name" placeholder="What should we call you?" maxlength="60" autocomplete="name"></div>
+              <div class="col-6 col-md-3"><label class="form-label" for="question-count">Questions</label><select class="form-select" id="question-count" name="count"><option value="5">5 questions</option><option value="10">10 questions</option><option value="15">15 questions</option></select></div>
+              <div class="col-6 col-md-3"><label class="form-label" for="time-limit">Time per question</label><select class="form-select" id="time-limit" name="time"><option value="15">15 seconds</option><option value="30" selected>30 seconds</option><option value="45">45 seconds</option></select></div>
+            </div>
+            <div class="setup-bottom"><div class="session-info"><svg class="icon"><use href="#i-clock"/></svg><span id="duration-estimate">About 3 minutes</span><span class="info-divider">·</span><span>No sign-up needed</span></div><button class="btn primary-button" type="submit">Let's get started <svg class="icon"><use href="#i-arrow"/></svg></button></div>
+          </form>
+        </section>
+
+        <div class="benefits row g-4"><div class="col-md-4 benefit"><span class="benefit-icon mint"><svg class="icon"><use href="#i-grid"/></svg></span><div><h3>A fresh mix, every time</h3><p>New questions and shuffled choices.</p></div></div><div class="col-md-4 benefit"><span class="benefit-icon peach"><svg class="icon"><use href="#i-spark"/></svg></span><div><h3>Learn as you go</h3><p>Understand the why behind the answer.</p></div></div><div class="col-md-4 benefit"><span class="benefit-icon lilac"><svg class="icon"><use href="#i-download"/></svg></span><div><h3>Keep your progress</h3><p>Download your detailed results as a PDF.</p></div></div></div>
+      </section>
+
+      <section id="quiz-screen" hidden aria-labelledby="quiz-title">
+        <div class="section-heading"><div><div class="eyebrow">YOUR PRACTICE SESSION</div><h1 id="quiz-title">Make every answer count.</h1><p>One choice. One step closer.</p></div><button id="exit-quiz" class="text-button">Exit quiz</button></div>
+        <div class="quiz-layout"><div class="quiz-main"><div class="progress-heading"><strong id="progress-label">Question 1 of 5</strong><span id="progress-percent">0% complete</span></div><ol id="question-progress" class="question-progress" aria-label="Question progress"></ol><div class="progress-legend"><span><i class="dot correct-dot"></i>Correct</span><span><i class="dot incorrect-dot"></i>Incorrect</span><span><i class="dot timeout-dot"></i>Timed out</span><span><i class="dot current-dot"></i>Current</span></div>
+          <article class="question-card"><div class="question-meta"><span id="question-category" class="category-pill">HTML</span><div id="timer" class="timer" role="timer" aria-label="Time remaining"><svg class="icon"><use href="#i-clock"/></svg><strong id="timer-seconds">30</strong><span>sec left</span></div></div><h2 id="question-title" tabindex="-1"></h2><p class="choose-label">Choose one answer below.</p><div id="answer-options" class="answer-options" role="group" aria-labelledby="question-title"></div><div id="answer-feedback" class="answer-feedback" hidden role="status" aria-live="polite"></div><div class="question-footer"><span id="answer-hint"><span class="key-hint">1–4</span> to select an answer</span><button id="next-question" class="btn primary-button" disabled>Next question <svg class="icon"><use href="#i-arrow"/></svg></button></div></article>
+        </div><aside class="session-card" aria-labelledby="session-title"><span class="tiny-label">KEEP GOING</span><h2 id="session-title">You've got this.</h2><p>Every answer is a chance to learn something.</p><div class="live-score"><svg class="icon"><use href="#i-spark"/></svg><strong id="live-score">0</strong><span>correct so far</span></div><div class="session-detail"><span>Questions</span><strong id="session-count">5</strong></div><div class="session-detail"><span>Time per question</span><strong id="session-time">30 sec</strong></div><div class="session-detail"><span>Question order</span><strong>Randomized</strong></div><div class="session-tip"><svg class="icon"><use href="#i-info"/></svg><p>Answers lock after your first choice. Read the explanation before moving on.</p></div></aside></div>
+      </section>
+
+      <section id="results-screen" hidden aria-labelledby="results-title">
+        <div class="section-heading"><div><div class="eyebrow">A LITTLE PRACTICE PAYS OFF</div><h1 id="results-title">Look how far you've come.</h1><p id="results-greeting">Your session is complete. Here's the full picture.</p></div><span class="level-pill">SESSION COMPLETE</span></div>
+        <div class="result-summary"><div class="score-ring" id="score-ring"><div><strong id="score-percent">0%</strong><span>your score</span></div></div><div class="result-message"><h2 id="score-title">Keep your curiosity going.</h2><p id="score-description"></p><div class="result-stats"><div><strong id="correct-total">0</strong><span><i class="dot correct-dot"></i>Correct</span></div><div><strong id="incorrect-total">0</strong><span><i class="dot incorrect-dot"></i>Incorrect</span></div><div><strong id="timeout-total">0</strong><span><i class="dot timeout-dot"></i>Timed out</span></div><div><strong id="elapsed-total">0s</strong><span>Time used</span></div></div></div></div>
+        <div class="results-actions"><div><button id="download-results" class="btn primary-button"><svg class="icon"><use href="#i-download"/></svg>Download results PDF</button><button id="retry-quiz" class="btn secondary-button"><svg class="icon"><use href="#i-repeat"/></svg>Try a fresh quiz</button></div><span id="best-score-label"></span></div>
+        <div class="review-heading"><div><h2>Your answer review</h2><p>A closer look at what you know and what comes next.</p></div><span id="review-count"></span></div><div id="answer-review" class="answer-review"></div><p id="download-status" class="download-status" role="status" aria-live="polite"></p>
+      </section>
+      <footer class="page-footer"><span>Made for curious minds.</span><span>HTML · CSS · JavaScript · Bootstrap</span></footer>
+    </main>
+  </div>
+</div>
+
+<dialog id="help-dialog" class="app-dialog" aria-labelledby="help-title"><div class="dialog-heading"><h2 id="help-title">A quick guide</h2><button class="icon-button close-dialog" aria-label="Close guide"><svg class="icon"><use href="#i-x"/></svg></button></div><ol class="help-steps"><li><strong>Set your pace.</strong><p>Pick 5, 10 or 15 questions and a time limit. Each quiz draws unique questions from a bank of 30.</p></li><li><strong>Choose before time runs out.</strong><p>Click an answer or press 1–4. Your first choice is final. A timeout reveals the correct answer and earns no point.</p></li><li><strong>Learn from the feedback.</strong><p>Green means correct, red means incorrect, and amber means timed out. Text labels explain every state.</p></li><li><strong>Take your results with you.</strong><p>Review your score and explanations, or download a PDF. Start a fresh quiz whenever you're ready.</p></li></ol><p class="help-note">The timer keeps counting in background tabs. Your name stays in this browser and in any PDF you download.</p><button class="btn primary-button close-dialog">Got it <svg class="icon"><use href="#i-check"/></svg></button></dialog>
+<dialog id="exit-dialog" class="app-dialog" aria-labelledby="exit-title"><div class="dialog-heading"><h2 id="exit-title">Leave this session?</h2></div><p>Your current answers will be discarded. You can start a fresh quiz any time.</p><div class="dialog-actions"><button class="btn secondary-button" id="continue-quiz">Keep practicing</button><button class="btn primary-button" id="confirm-exit">Leave quiz</button></div></dialog>
+</body>
+</html>

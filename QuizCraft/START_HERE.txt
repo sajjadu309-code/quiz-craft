@@ -1,0 +1,25 @@
+QUIZCRAFT - CSC336 ASSIGNMENT 2
+
+EASIEST WAY TO OPEN
+Open the dist folder, then double-click index.html.
+The quiz runs locally in your browser without internet.
+
+RUN FROM VS CODE
+1. Extract this ZIP fully.
+2. Open the QuizCraft folder containing package.json in VS Code.
+3. Open Terminal > New Terminal.
+4. Type: npm run dev
+5. Open: http://localhost:5173
+
+Node.js and npm must be installed for the terminal method.
+No npm install command is needed for this project.
+If PowerShell blocks npm, use: npm.cmd run dev
+
+READ NEXT
+README.md       Run instructions, file explanations and GitHub upload steps.
+VIVA_GUIDE.md   Simple English and Roman Urdu viva preparation.
+report/         Assignment PDF and actual website screenshots.
+
+BEFORE SUBMISSION
+Fill your registration number and actual GitHub repository URL in the PDF report.
+The report fields are editable in a compatible PDF viewer.
